@@ -1,0 +1,137 @@
+# Music Playlist Management System
+# Using Singly Linked List
+
+
+# Node class
+class Song:
+    def __init__(self, name, artist):
+        self.name = name
+        self.artist = artist
+        self.next = None
+
+
+# Playlist class
+class Playlist:
+    def __init__(self):
+        self.head = None
+
+    # 1. Add a song
+    def add_song(self, name, artist):
+        new_song = Song(name, artist)
+
+        # If playlist is empty
+        if self.head is None:
+            self.head = new_song
+        else:
+            current = self.head
+
+            # Go to the last song
+            while current.next is not None:
+                current = current.next
+
+            current.next = new_song
+
+        print("Song added successfully!")
+
+    # 2. Delete a song
+    def delete_song(self, name):
+        if self.head is None:
+            print("Playlist is empty!")
+            return
+
+        # Delete first song
+        if self.head.name.lower() == name.lower():
+            self.head = self.head.next
+            print("Song deleted successfully!")
+            return
+
+        current = self.head
+
+        while current.next is not None:
+            if current.next.name.lower() == name.lower():
+                current.next = current.next.next
+                print("Song deleted successfully!")
+                return
+
+            current = current.next
+
+        print("Song not found!")
+
+    # 3. Search a song
+    def search_song(self, name):
+        current = self.head
+
+        while current is not None:
+            if current.name.lower() == name.lower():
+                print("Song found!")
+                print("Song:", current.name)
+                print("Artist:", current.artist)
+                return
+
+            current = current.next
+
+        print("Song not found!")
+
+    # 4. Display / Traverse playlist
+    def display_playlist(self):
+        if self.head is None:
+            print("Playlist is empty!")
+            return
+
+        current = self.head
+
+        print("\n----- MUSIC PLAYLIST -----")
+
+        while current is not None:
+            print("Song:", current.name)
+            print("Artist:", current.artist)
+            print("--------------------------")
+
+            current = current.next
+
+
+# Main program
+playlist = Playlist()
+
+while True:
+
+    print("\n===== MUSIC PLAYLIST MANAGEMENT SYSTEM =====")
+    print("1. Add Song")
+    print("2. Delete Song")
+    print("3. Search Song")
+    print("4. Display Playlist")
+    print("5. Exit")
+
+    choice = input("Enter your choice: ")
+
+    if choice == "1":
+
+        name = input("Enter song name: ")
+        artist = input("Enter artist name: ")
+
+        playlist.add_song(name, artist)
+
+    elif choice == "2":
+
+        name = input("Enter song name to delete: ")
+
+        playlist.delete_song(name)
+
+    elif choice == "3":
+
+        name = input("Enter song name to search: ")
+
+        playlist.search_song(name)
+
+    elif choice == "4":
+
+        playlist.display_playlist()
+
+    elif choice == "5":
+
+        print("Thank you for using Music Playlist Management System!")
+        break
+
+    else:
+
+        print("Invalid choice! Please try again.")
